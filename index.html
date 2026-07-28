@@ -291,24 +291,6 @@
     opacity: .9;
   }
 
-  /* Toast for the vCard save */
-  .toast {
-    position: fixed;
-    left: 50%;
-    bottom: calc(1.5rem + env(safe-area-inset-bottom));
-    transform: translate(-50%, 1rem);
-    background: var(--ink);
-    color: var(--paper);
-    font-size: 0.875rem;
-    padding: 0.6875rem 1.0625rem;
-    border-radius: 3px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity .2s ease, transform .2s ease;
-    z-index: 10;
-  }
-  .toast[data-show="true"] { opacity: 1; transform: translate(-50%, 0); }
-
   /* ============================================================
      LOAD SEQUENCE
      ============================================================ */
@@ -351,9 +333,12 @@
   </div>
 
   <div class="actions">
-    <button class="btn btn--primary" id="save-contact" type="button">
+    <!-- Plain link, no `download` attribute: iOS Safari sees the vCard MIME
+         type and opens the native "Add to Contacts" sheet. Editing contact
+         details means editing contact.vcf, which is the single source. -->
+    <a class="btn btn--primary" href="contact.vcf">
       Save to contacts
-    </button>
+    </a>
 
     <a class="btn" href="https://www.linkedin.com/in/estela-katchen/" target="_blank" rel="noopener noreferrer">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -392,7 +377,6 @@
 
 </main>
 
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
   /* ---- Headshot: fall back to the monogram if the image ever fails ---- */
@@ -405,43 +389,4 @@
     });
   })();
 
-  /* ---- vCard ---- EDIT HERE if your details change ---- */
-  var VCARD = [
-    'BEGIN:VCARD',
-    'VERSION:3.0',
-    'N:Katchen;Estela;;;',
-    'FN:Estela Katchen',
-    'TITLE:Mechatronic Systems Engineering & HBA Candidate',
-    'ORG:Western University — Ivey Business School',
-    'EMAIL;TYPE=INTERNET,PREF:estelakatchen@icloud.com',
-    'TEL;TYPE=CELL,VOICE:+14168898190',
-    'ADR;TYPE=HOME:;;;Toronto;ON;;Canada',
-    'URL:https://www.linkedin.com/in/estela-katchen/',
-    'END:VCARD'
-  ].join('\r\n');
-
-  function toast(msg) {
-    var t = document.getElementById('toast');
-    t.textContent = msg;
-    t.dataset.show = 'true';
-    clearTimeout(t._timer);
-    t._timer = setTimeout(function () { t.dataset.show = 'false'; }, 2600);
-  }
-
-  document.getElementById('save-contact').addEventListener('click', function () {
-    try {
-      var blob = new Blob([VCARD], { type: 'text/vcard;charset=utf-8' });
-      var url = URL.createObjectURL(blob);
-      var a = document.createElement('a');
-      a.href = url;
-      a.download = 'Estela-Katchen.vcf';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-      toast('Contact card downloaded — open it to add.');
-    } catch (e) {
-      toast('Could not save. Email: estelakatchen@icloud.com');
-    }
-  });
 </script>
