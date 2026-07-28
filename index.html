@@ -2,68 +2,68 @@
 
 <style>
   /* ============================================================
-     TOKENS — drafting titleblock: cool blue-biased neutrals,
-     phosphor-teal accent, brass for small marks only.
+     TOKENS — warm paper, oxblood accent, red-biased neutrals.
      ============================================================ */
   :root {
-    --paper:    #EEF1F4;
-    --surface:  #FFFFFF;
-    --ink:      #111A24;
-    --muted:    #5A6B7A;
-    --accent:   #0B6E63;
+    --paper:      #FBF8F7;
+    --surface:    #FFFFFF;
+    --ink:        #241C1E;
+    --muted:      #6E605F;
+    --accent:     #7A2E3C;
+    --accent-fill:#7A2E3C;
     --accent-ink: #FFFFFF;
-    --brass:    #9A7B34;
-    --hairline: #C9D2DA;
-    --grid:     rgba(17, 26, 36, 0.045);
-    --shadow:   0 1px 2px rgba(17, 26, 36, .06), 0 12px 32px -12px rgba(17, 26, 36, .18);
+    --rule:       #E3D9D6;
+    --rule-soft:  #EFE8E6;
+    --shadow:     0 1px 2px rgba(36, 28, 30, .05), 0 14px 36px -14px rgba(36, 28, 30, .20);
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --paper:    #0C141C;
-      --surface:  #131E29;
-      --ink:      #E8EDF2;
-      --muted:    #8B9BAA;
-      --accent:   #3DBFAC;
-      --accent-ink: #06231F;
-      --brass:    #C6A44F;
-      --hairline: #24333F;
-      --grid:     rgba(232, 237, 242, 0.045);
-      --shadow:   0 1px 2px rgba(0, 0, 0, .4), 0 12px 32px -12px rgba(0, 0, 0, .6);
+      --paper:      #171214;
+      --surface:    #211A1C;
+      --ink:        #F2EAE9;
+      --muted:      #A99695;
+      --accent:     #E0A6AF;
+      --accent-fill:#8E3644;
+      --accent-ink: #FDF7F7;
+      --rule:       #3A2E31;
+      --rule-soft:  #2C2325;
+      --shadow:     0 1px 2px rgba(0, 0, 0, .45), 0 14px 36px -14px rgba(0, 0, 0, .7);
     }
   }
 
-  /* Viewer's explicit toggle must win over the OS preference, both ways. */
+  /* The viewer's explicit toggle must win over the OS preference, both ways. */
   :root[data-theme="light"] {
-    --paper:    #EEF1F4;
-    --surface:  #FFFFFF;
-    --ink:      #111A24;
-    --muted:    #5A6B7A;
-    --accent:   #0B6E63;
+    --paper:      #FBF8F7;
+    --surface:    #FFFFFF;
+    --ink:        #241C1E;
+    --muted:      #6E605F;
+    --accent:     #7A2E3C;
+    --accent-fill:#7A2E3C;
     --accent-ink: #FFFFFF;
-    --brass:    #9A7B34;
-    --hairline: #C9D2DA;
-    --grid:     rgba(17, 26, 36, 0.045);
-    --shadow:   0 1px 2px rgba(17, 26, 36, .06), 0 12px 32px -12px rgba(17, 26, 36, .18);
+    --rule:       #E3D9D6;
+    --rule-soft:  #EFE8E6;
+    --shadow:     0 1px 2px rgba(36, 28, 30, .05), 0 14px 36px -14px rgba(36, 28, 30, .20);
   }
 
   :root[data-theme="dark"] {
-    --paper:    #0C141C;
-    --surface:  #131E29;
-    --ink:      #E8EDF2;
-    --muted:    #8B9BAA;
-    --accent:   #3DBFAC;
-    --accent-ink: #06231F;
-    --brass:    #C6A44F;
-    --hairline: #24333F;
-    --grid:     rgba(232, 237, 242, 0.045);
-    --shadow:   0 1px 2px rgba(0, 0, 0, .4), 0 12px 32px -12px rgba(0, 0, 0, .6);
+    --paper:      #171214;
+    --surface:    #211A1C;
+    --ink:        #F2EAE9;
+    --muted:      #A99695;
+    --accent:     #E0A6AF;
+    --accent-fill:#8E3644;
+    --accent-ink: #FDF7F7;
+    --rule:       #3A2E31;
+    --rule-soft:  #2C2325;
+    --shadow:     0 1px 2px rgba(0, 0, 0, .45), 0 14px 36px -14px rgba(0, 0, 0, .7);
   }
 
   :root {
-    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
-    --step: 0.75rem;
+    /* Leads with the finest serifs each platform has; Times New Roman is the
+       baseline everyone falls back to. */
+    --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino,
+             "Book Antiqua", Georgia, "Times New Roman", Times, serif;
   }
 
   /* ============================================================
@@ -76,66 +76,50 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    font-family: var(--sans);
+    font-family: var(--serif);
     color: var(--ink);
-    background-color: var(--paper);
-    /* Engineering grid, 22px pitch. */
-    background-image:
-      repeating-linear-gradient(to right, var(--grid) 0 1px, transparent 1px 22px),
-      repeating-linear-gradient(to bottom, var(--grid) 0 1px, transparent 1px 22px);
+    background: var(--paper);
     -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
   }
 
   .card {
     width: 100%;
-    max-width: 25rem;
+    max-width: 24.5rem;
     background: var(--surface);
-    border: 1px solid var(--hairline);
-    border-radius: 2px; /* drafting stock, not a rounded app card */
+    border: 1px solid var(--rule);
+    border-radius: 3px;
     box-shadow: var(--shadow);
-    padding: clamp(1.5rem, 6vw, 2rem);
+    padding: clamp(1.75rem, 7vw, 2.375rem) clamp(1.5rem, 6vw, 2rem);
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.75rem;
   }
 
   /* ============================================================
-     PORTRAIT — hairline frame with registration ticks
+     PORTRAIT — plain circle inside a single offset ring
      ============================================================ */
   .portrait-block {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.125rem;
+    gap: 1.25rem;
   }
 
   .portrait {
     position: relative;
-    width: 8.5rem;
-    height: 8.5rem;
+    width: 8.25rem;
+    height: 8.25rem;
     flex: none;
   }
 
-  /* Registration ticks: four corner crosshairs, drafting-style. */
-  .portrait::before,
   .portrait::after {
     content: "";
     position: absolute;
     inset: -0.5rem;
+    border: 1px solid var(--rule);
+    border-radius: 50%;
     pointer-events: none;
-  }
-  .portrait::before {
-    border-top: 1px solid var(--brass);
-    border-bottom: 1px solid var(--brass);
-    /* clip to short ticks at the corners only */
-    -webkit-mask-image: linear-gradient(to right, #000 0 0.75rem, transparent 0.75rem calc(100% - 0.75rem), #000 calc(100% - 0.75rem) 100%);
-    mask-image: linear-gradient(to right, #000 0 0.75rem, transparent 0.75rem calc(100% - 0.75rem), #000 calc(100% - 0.75rem) 100%);
-  }
-  .portrait::after {
-    border-left: 1px solid var(--brass);
-    border-right: 1px solid var(--brass);
-    -webkit-mask-image: linear-gradient(to bottom, #000 0 0.75rem, transparent 0.75rem calc(100% - 0.75rem), #000 calc(100% - 0.75rem) 100%);
-    mask-image: linear-gradient(to bottom, #000 0 0.75rem, transparent 0.75rem calc(100% - 0.75rem), #000 calc(100% - 0.75rem) 100%);
   }
 
   .portrait img,
@@ -146,21 +130,20 @@
     object-fit: cover;
     object-position: center 20%;
     border-radius: 50%;
-    border: 1px solid var(--hairline);
     background: var(--paper);
   }
 
-  /* Fallback shown until a real headshot.jpg sits next to this file. */
+  /* Fallback until a real headshot.jpg sits next to this file. */
   .monogram {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: var(--mono);
-    font-size: 2rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
+    font-size: 2.5rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
     color: var(--accent);
-    text-indent: 0.08em;
+    text-indent: 0.06em;
+    border: 1px solid var(--rule-soft);
   }
 
   .portrait img[hidden] { display: none; }
@@ -168,32 +151,46 @@
   /* ============================================================
      NAME
      ============================================================ */
-  .identity { text-align: center; display: flex; flex-direction: column; gap: 0.5rem; }
+  .identity {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.625rem;
+  }
 
   h1 {
     margin: 0;
-    font-size: clamp(1.75rem, 8vw, 2.125rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
+    font-size: clamp(2rem, 9vw, 2.4rem);
+    font-weight: 400;
+    letter-spacing: 0.005em;
+    line-height: 1.1;
     text-wrap: balance;
+  }
+
+  .flourish {
+    width: 2.25rem;
+    height: 1px;
+    background: var(--accent);
+    opacity: .55;
+    margin: 0.125rem 0;
   }
 
   .role {
     margin: 0;
-    font-size: 0.9375rem;
+    font-size: 1rem;
+    font-style: italic;
     line-height: 1.45;
-    color: var(--muted);
+    color: var(--ink);
     text-wrap: balance;
   }
 
   .school {
     margin: 0;
-    font-family: var(--mono);
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 0.13em;
-    color: var(--brass);
+    letter-spacing: 0.15em;
+    color: var(--muted);
   }
 
   /* ============================================================
@@ -206,14 +203,13 @@
     align-items: center;
     gap: 0.75rem;
     min-height: 3.25rem;
-    padding: 0 1.125rem;
-    border: 1px solid var(--hairline);
-    border-radius: 2px;
+    padding: 0 1.25rem;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
     background: var(--surface);
     color: var(--ink);
-    font-family: var(--sans);
-    font-size: 0.9375rem;
-    font-weight: 550;
+    font-family: var(--serif);
+    font-size: 1rem;
     text-align: left;
     text-decoration: none;
     cursor: pointer;
@@ -222,75 +218,68 @@
 
   .btn:hover { border-color: var(--accent); }
   .btn:active { transform: translateY(1px); }
-
-  .btn:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
   .btn--primary {
-    background: var(--accent);
-    border-color: var(--accent);
+    background: var(--accent-fill);
+    border-color: var(--accent-fill);
     color: var(--accent-ink);
-    font-weight: 650;
+    justify-content: center;
+    letter-spacing: 0.03em;
   }
-  .btn--primary:hover { filter: brightness(1.07); border-color: var(--accent); }
+  .btn--primary:hover { filter: brightness(1.1); border-color: var(--accent-fill); }
 
-  .btn svg { flex: none; width: 1.125rem; height: 1.125rem; }
-  .btn .chev { margin-left: auto; opacity: .45; width: .75rem; height: .75rem; }
+  .btn svg { flex: none; width: 1.0625rem; height: 1.0625rem; }
+  .btn .chev { margin-left: auto; opacity: .4; width: .7rem; height: .7rem; }
 
   /* ============================================================
-     TITLEBLOCK — contact rows, label column in mono
+     CONTACT ROWS
      ============================================================ */
-  .titleblock {
-    border-top: 1px solid var(--hairline);
+  .details {
+    border-top: 1px solid var(--rule-soft);
     display: flex;
     flex-direction: column;
   }
 
   .row {
     display: grid;
-    grid-template-columns: 4.75rem 1fr;
+    grid-template-columns: 5rem 1fr;
     align-items: baseline;
     gap: 0.75rem;
-    padding: 0.8125rem 0;
-    border-bottom: 1px solid var(--hairline);
+    padding: 0.875rem 0;
+    border-bottom: 1px solid var(--rule-soft);
     text-decoration: none;
     color: inherit;
-    min-height: 1.5rem;
   }
 
   .row:last-child { border-bottom: 0; }
 
-  .row dt, .row .label {
+  .row dt {
     margin: 0;
-    font-family: var(--mono);
-    font-size: 0.625rem;
+    font-size: 0.6875rem;
     text-transform: uppercase;
-    letter-spacing: 0.13em;
+    letter-spacing: 0.14em;
     color: var(--muted);
   }
 
-  .row dd, .row .value {
+  .row dd {
     margin: 0;
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     line-height: 1.4;
     word-break: break-word;
   }
 
-  a.row .value { color: var(--accent); }
-  a.row:hover .value { text-decoration: underline; text-underline-offset: 2px; }
+  a.row dd { color: var(--accent); }
+  a.row:hover dd { text-decoration: underline; text-underline-offset: 3px; }
   a.row:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
   .foot {
     margin: 0;
-    font-family: var(--mono);
-    font-size: 0.5625rem;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
+    font-size: 0.6875rem;
+    font-style: italic;
+    letter-spacing: 0.04em;
     color: var(--muted);
     text-align: center;
-    opacity: .7;
   }
 
   /* Toast for the vCard save */
@@ -301,9 +290,9 @@
     transform: translate(-50%, 1rem);
     background: var(--ink);
     color: var(--paper);
-    font-size: 0.8125rem;
-    padding: 0.6875rem 1rem;
-    border-radius: 2px;
+    font-size: 0.875rem;
+    padding: 0.6875rem 1.0625rem;
+    border-radius: 3px;
     opacity: 0;
     pointer-events: none;
     transition: opacity .2s ease, transform .2s ease;
@@ -319,13 +308,11 @@
     to   { opacity: 1; transform: none; }
   }
 
-  .card > * {
-    animation: rise .5s cubic-bezier(.2, .7, .3, 1) backwards;
-  }
+  .card > * { animation: rise .55s cubic-bezier(.2, .7, .3, 1) backwards; }
   .card > *:nth-child(1) { animation-delay: .04s; }
-  .card > *:nth-child(2) { animation-delay: .12s; }
-  .card > *:nth-child(3) { animation-delay: .18s; }
-  .card > *:nth-child(4) { animation-delay: .24s; }
+  .card > *:nth-child(2) { animation-delay: .13s; }
+  .card > *:nth-child(3) { animation-delay: .20s; }
+  .card > *:nth-child(4) { animation-delay: .27s; }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -347,6 +334,7 @@
 
     <div class="identity">
       <h1>Estela Katchen</h1>
+      <div class="flourish" aria-hidden="true"></div>
       <p class="role">Mechatronic Systems Engineering &amp; Business Administration</p>
       <p class="school">Western University &middot; Ivey Business School</p>
     </div>
@@ -354,11 +342,6 @@
 
   <div class="actions">
     <button class="btn btn--primary" id="save-contact" type="button">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-        <circle cx="9" cy="7" r="4"/>
-        <path d="M19 8v6M22 11h-6"/>
-      </svg>
       Save to contacts
     </button>
 
@@ -371,7 +354,7 @@
     </a>
 
     <a class="btn" href="resume.pdf" target="_blank" rel="noopener noreferrer">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
         <path d="M14 2v6h6M9 13h6M9 17h6"/>
       </svg>
@@ -380,26 +363,22 @@
     </a>
   </div>
 
-  <dl class="titleblock">
+  <dl class="details">
     <a class="row" href="mailto:estelakatchen@icloud.com">
-      <dt class="label">Email</dt>
-      <dd class="value">estelakatchen@icloud.com</dd>
+      <dt>Email</dt>
+      <dd>estelakatchen@icloud.com</dd>
     </a>
     <a class="row" href="tel:+14168898190">
-      <dt class="label">Phone</dt>
-      <dd class="value">(416) 889-8190</dd>
+      <dt>Phone</dt>
+      <dd>(416) 889-8190</dd>
     </a>
     <div class="row">
-      <dt class="label">Based in</dt>
-      <dd class="value">Toronto, ON</dd>
-    </div>
-    <div class="row">
-      <dt class="label">Focus</dt>
-      <dd class="value">AI/ML research &middot; Robotics &middot; Product strategy</dd>
+      <dt>Based in</dt>
+      <dd>Toronto, Ontario</dd>
     </div>
   </dl>
 
-  <p class="foot">Tap to connect</p>
+  <p class="foot">Lovely to meet you.</p>
 
 </main>
 
@@ -410,15 +389,13 @@
   (function () {
     var img = document.getElementById('headshot');
     var mono = document.getElementById('monogram');
-    img.addEventListener('load', function () {
-      img.hidden = false;
-      mono.style.display = 'none';
-    });
-    // If it 404s, the monogram simply stays.
-    if (img.complete && img.naturalWidth > 0) {
+    function reveal() {
       img.hidden = false;
       mono.style.display = 'none';
     }
+    img.addEventListener('load', reveal);
+    if (img.complete && img.naturalWidth > 0) reveal();
+    // If it 404s, the monogram simply stays.
   })();
 
   /* ---- vCard ---- EDIT HERE if your details change ---- */
