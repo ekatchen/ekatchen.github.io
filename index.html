@@ -1,0 +1,463 @@
+<title>Estela Katchen — Contact Card</title>
+
+<style>
+  /* ============================================================
+     TOKENS — drafting titleblock: cool blue-biased neutrals,
+     phosphor-teal accent, brass for small marks only.
+     ============================================================ */
+  :root {
+    --paper:    #EEF1F4;
+    --surface:  #FFFFFF;
+    --ink:      #111A24;
+    --muted:    #5A6B7A;
+    --accent:   #0B6E63;
+    --accent-ink: #FFFFFF;
+    --brass:    #9A7B34;
+    --hairline: #C9D2DA;
+    --grid:     rgba(17, 26, 36, 0.045);
+    --shadow:   0 1px 2px rgba(17, 26, 36, .06), 0 12px 32px -12px rgba(17, 26, 36, .18);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:    #0C141C;
+      --surface:  #131E29;
+      --ink:      #E8EDF2;
+      --muted:    #8B9BAA;
+      --accent:   #3DBFAC;
+      --accent-ink: #06231F;
+      --brass:    #C6A44F;
+      --hairline: #24333F;
+      --grid:     rgba(232, 237, 242, 0.045);
+      --shadow:   0 1px 2px rgba(0, 0, 0, .4), 0 12px 32px -12px rgba(0, 0, 0, .6);
+    }
+  }
+
+  /* Viewer's explicit toggle must win over the OS preference, both ways. */
+  :root[data-theme="light"] {
+    --paper:    #EEF1F4;
+    --surface:  #FFFFFF;
+    --ink:      #111A24;
+    --muted:    #5A6B7A;
+    --accent:   #0B6E63;
+    --accent-ink: #FFFFFF;
+    --brass:    #9A7B34;
+    --hairline: #C9D2DA;
+    --grid:     rgba(17, 26, 36, 0.045);
+    --shadow:   0 1px 2px rgba(17, 26, 36, .06), 0 12px 32px -12px rgba(17, 26, 36, .18);
+  }
+
+  :root[data-theme="dark"] {
+    --paper:    #0C141C;
+    --surface:  #131E29;
+    --ink:      #E8EDF2;
+    --muted:    #8B9BAA;
+    --accent:   #3DBFAC;
+    --accent-ink: #06231F;
+    --brass:    #C6A44F;
+    --hairline: #24333F;
+    --grid:     rgba(232, 237, 242, 0.045);
+    --shadow:   0 1px 2px rgba(0, 0, 0, .4), 0 12px 32px -12px rgba(0, 0, 0, .6);
+  }
+
+  :root {
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --step: 0.75rem;
+  }
+
+  /* ============================================================
+     GROUND
+     ============================================================ */
+  body {
+    min-height: 100dvh;
+    margin: 0;
+    padding: clamp(1.25rem, 5vw, 3rem) 1.25rem calc(2.5rem + env(safe-area-inset-bottom));
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    font-family: var(--sans);
+    color: var(--ink);
+    background-color: var(--paper);
+    /* Engineering grid, 22px pitch. */
+    background-image:
+      repeating-linear-gradient(to right, var(--grid) 0 1px, transparent 1px 22px),
+      repeating-linear-gradient(to bottom, var(--grid) 0 1px, transparent 1px 22px);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 25rem;
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: 2px; /* drafting stock, not a rounded app card */
+    box-shadow: var(--shadow);
+    padding: clamp(1.5rem, 6vw, 2rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* ============================================================
+     PORTRAIT — hairline frame with registration ticks
+     ============================================================ */
+  .portrait-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.125rem;
+  }
+
+  .portrait {
+    position: relative;
+    width: 8.5rem;
+    height: 8.5rem;
+    flex: none;
+  }
+
+  /* Registration ticks: four corner crosshairs, drafting-style. */
+  .portrait::before,
+  .portrait::after {
+    content: "";
+    position: absolute;
+    inset: -0.5rem;
+    pointer-events: none;
+  }
+  .portrait::before {
+    border-top: 1px solid var(--brass);
+    border-bottom: 1px solid var(--brass);
+    /* clip to short ticks at the corners only */
+    -webkit-mask-image: linear-gradient(to right, #000 0 0.75rem, transparent 0.75rem calc(100% - 0.75rem), #000 calc(100% - 0.75rem) 100%);
+    mask-image: linear-gradient(to right, #000 0 0.75rem, transparent 0.75rem calc(100% - 0.75rem), #000 calc(100% - 0.75rem) 100%);
+  }
+  .portrait::after {
+    border-left: 1px solid var(--brass);
+    border-right: 1px solid var(--brass);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0 0.75rem, transparent 0.75rem calc(100% - 0.75rem), #000 calc(100% - 0.75rem) 100%);
+    mask-image: linear-gradient(to bottom, #000 0 0.75rem, transparent 0.75rem calc(100% - 0.75rem), #000 calc(100% - 0.75rem) 100%);
+  }
+
+  .portrait img,
+  .portrait .monogram {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center 20%;
+    border-radius: 50%;
+    border: 1px solid var(--hairline);
+    background: var(--paper);
+  }
+
+  /* Fallback shown until a real headshot.jpg sits next to this file. */
+  .monogram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    text-indent: 0.08em;
+  }
+
+  .portrait img[hidden] { display: none; }
+
+  /* ============================================================
+     NAME
+     ============================================================ */
+  .identity { text-align: center; display: flex; flex-direction: column; gap: 0.5rem; }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(1.75rem, 8vw, 2.125rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+
+  .role {
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.45;
+    color: var(--muted);
+    text-wrap: balance;
+  }
+
+  .school {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--brass);
+  }
+
+  /* ============================================================
+     ACTIONS
+     ============================================================ */
+  .actions { display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 3.25rem;
+    padding: 0 1.125rem;
+    border: 1px solid var(--hairline);
+    border-radius: 2px;
+    background: var(--surface);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 0.9375rem;
+    font-weight: 550;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color .15s ease, transform .12s ease, background-color .15s ease;
+  }
+
+  .btn:hover { border-color: var(--accent); }
+  .btn:active { transform: translateY(1px); }
+
+  .btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .btn--primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 650;
+  }
+  .btn--primary:hover { filter: brightness(1.07); border-color: var(--accent); }
+
+  .btn svg { flex: none; width: 1.125rem; height: 1.125rem; }
+  .btn .chev { margin-left: auto; opacity: .45; width: .75rem; height: .75rem; }
+
+  /* ============================================================
+     TITLEBLOCK — contact rows, label column in mono
+     ============================================================ */
+  .titleblock {
+    border-top: 1px solid var(--hairline);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 4.75rem 1fr;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding: 0.8125rem 0;
+    border-bottom: 1px solid var(--hairline);
+    text-decoration: none;
+    color: inherit;
+    min-height: 1.5rem;
+  }
+
+  .row:last-child { border-bottom: 0; }
+
+  .row dt, .row .label {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--muted);
+  }
+
+  .row dd, .row .value {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    word-break: break-word;
+  }
+
+  a.row .value { color: var(--accent); }
+  a.row:hover .value { text-decoration: underline; text-underline-offset: 2px; }
+  a.row:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .foot {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 0.5625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+    text-align: center;
+    opacity: .7;
+  }
+
+  /* Toast for the vCard save */
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: calc(1.5rem + env(safe-area-inset-bottom));
+    transform: translate(-50%, 1rem);
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.8125rem;
+    padding: 0.6875rem 1rem;
+    border-radius: 2px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease, transform .2s ease;
+    z-index: 10;
+  }
+  .toast[data-show="true"] { opacity: 1; transform: translate(-50%, 0); }
+
+  /* ============================================================
+     LOAD SEQUENCE
+     ============================================================ */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(0.5rem); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .card > * {
+    animation: rise .5s cubic-bezier(.2, .7, .3, 1) backwards;
+  }
+  .card > *:nth-child(1) { animation-delay: .04s; }
+  .card > *:nth-child(2) { animation-delay: .12s; }
+  .card > *:nth-child(3) { animation-delay: .18s; }
+  .card > *:nth-child(4) { animation-delay: .24s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .01ms !important;
+    }
+  }
+</style>
+
+<main class="card">
+
+  <div class="portrait-block">
+    <div class="portrait">
+      <!-- Drop a square headshot.jpg beside this file and it replaces the monogram. -->
+      <img id="headshot" src="headshot.jpg" alt="Estela Katchen" hidden>
+      <div class="monogram" id="monogram" aria-hidden="true">EK</div>
+    </div>
+
+    <div class="identity">
+      <h1>Estela Katchen</h1>
+      <p class="role">Mechatronic Systems Engineering &amp; Business Administration</p>
+      <p class="school">Western University &middot; Ivey Business School</p>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn--primary" id="save-contact" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M19 8v6M22 11h-6"/>
+      </svg>
+      Save to contacts
+    </button>
+
+    <a class="btn" href="https://www.linkedin.com/in/estela-katchen/" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.76V21h-4v-5.6c0-1.34-.03-3.06-1.9-3.06-1.9 0-2.2 1.46-2.2 2.96V21H9z"/>
+      </svg>
+      LinkedIn
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+    </a>
+
+    <a class="btn" href="resume.pdf" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <path d="M14 2v6h6M9 13h6M9 17h6"/>
+      </svg>
+      Résumé
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+    </a>
+  </div>
+
+  <dl class="titleblock">
+    <a class="row" href="mailto:estelakatchen@icloud.com">
+      <dt class="label">Email</dt>
+      <dd class="value">estelakatchen@icloud.com</dd>
+    </a>
+    <a class="row" href="tel:+14168898190">
+      <dt class="label">Phone</dt>
+      <dd class="value">(416) 889-8190</dd>
+    </a>
+    <div class="row">
+      <dt class="label">Based in</dt>
+      <dd class="value">Toronto, ON</dd>
+    </div>
+    <div class="row">
+      <dt class="label">Focus</dt>
+      <dd class="value">AI/ML research &middot; Robotics &middot; Product strategy</dd>
+    </div>
+  </dl>
+
+  <p class="foot">Tap to connect</p>
+
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  /* ---- Headshot: show the photo only if it actually loads ---- */
+  (function () {
+    var img = document.getElementById('headshot');
+    var mono = document.getElementById('monogram');
+    img.addEventListener('load', function () {
+      img.hidden = false;
+      mono.style.display = 'none';
+    });
+    // If it 404s, the monogram simply stays.
+    if (img.complete && img.naturalWidth > 0) {
+      img.hidden = false;
+      mono.style.display = 'none';
+    }
+  })();
+
+  /* ---- vCard ---- EDIT HERE if your details change ---- */
+  var VCARD = [
+    'BEGIN:VCARD',
+    'VERSION:3.0',
+    'N:Katchen;Estela;;;',
+    'FN:Estela Katchen',
+    'TITLE:Mechatronic Systems Engineering & HBA Candidate',
+    'ORG:Western University — Ivey Business School',
+    'EMAIL;TYPE=INTERNET,PREF:estelakatchen@icloud.com',
+    'TEL;TYPE=CELL,VOICE:+14168898190',
+    'ADR;TYPE=HOME:;;;Toronto;ON;;Canada',
+    'URL:https://www.linkedin.com/in/estela-katchen/',
+    'END:VCARD'
+  ].join('\r\n');
+
+  function toast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.dataset.show = 'true';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function () { t.dataset.show = 'false'; }, 2600);
+  }
+
+  document.getElementById('save-contact').addEventListener('click', function () {
+    try {
+      var blob = new Blob([VCARD], { type: 'text/vcard;charset=utf-8' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'Estela-Katchen.vcf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      toast('Contact card downloaded — open it to add.');
+    } catch (e) {
+      toast('Could not save. Email: estelakatchen@icloud.com');
+    }
+  });
+</script>
